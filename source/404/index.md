@@ -61,3 +61,24 @@ permalink: /404
 	padding: 0;
 	}
 </style>
+<hr>
+<div class="pic">
+<br>
+<img src="/resources/e8nZC.gif" title="BananaMan">
+<br>
+</div>
+<p class="center">很抱歉，您所访问的地址并不存在: </p>
+<p class="center">
+<a href="/">回主页</a>
+"."
+<a href="/archives">所有文章</a>
+"."
+<a href="/about">留言板</a></p>
+<p class="center">可在边栏搜索框中对本站进行检索，以获取相关信息。</p>
+<div style="text-align: center">
+<br>
+以下是博主喜欢的一些歌曲，可以听听，稍作休息~
+<br>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="320" height="330" src="http://music.163.com/outchain/player?type=0&amp;id=112513213&amp;auto=0&amp;height=430"></iframe>
+<br>
+</div>
