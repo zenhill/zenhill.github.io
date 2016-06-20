@@ -4,26 +4,6 @@ toc: false
 comments: false
 permalink: /404
 ---
-<div class="article-info article-info-post">
-<div class="clearfix"></div>
-      </div>
-<div class="article-entry" itemprop="articleBody">
-<style>
-    .article-meta { display: none; }
-    #container .article .article-title { padding-right: 0; }
-    .article-header {
-        padding: 0;
-        padding-top: 26px;
-        border-left: none;
-        text-align: center;
-    }
-    .article-header:hover { border-left: none; }
-    .article-title { font-size: 1.6em }
-    .article-entry hr { margin: 0;}
-    .article-meta,
-    #container .article-info-post.article-info { display: none;}
-    #container .article .article-title { padding: 0; }
-</style>
 <style type="text/css">
 	.article-header {
 		padding: 0;
