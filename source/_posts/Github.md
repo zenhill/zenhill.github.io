@@ -3,13 +3,13 @@ title: Hexo 使用travis托管生成静态网于github笔记
 category: Blog
 toc: true
 tags:
- -![MarkDown][http://cl.ly/2K04113e0Q1Z]
+ -[MarkDown]
 tags:
- -![Git][http]
+ -[Git]
 tags:
- -![Hexo][http]
+ -[Hexo]
 tags:
- -![Travis][http]
+ -[Travis]
 
 ---
 折腾了一个星期才把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,
