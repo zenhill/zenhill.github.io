@@ -1,6 +1,6 @@
 ---
-title: Hexo 使用travis托管生成静态网于github笔记
-date: 2016-06-23 00:37:37
+title: Hexo使用travis托管生成静态网于github笔记
+date: 2016-06-23 02:12:50
 category: Blog
 toc: true
 tags:
