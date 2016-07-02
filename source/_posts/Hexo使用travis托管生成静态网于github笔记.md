@@ -1,6 +1,6 @@
 ---
 title: Hexo使用travis托管生成静态网于github笔记
-date: 2016-06-23 02:12:50
+date: 2016-06-23 00:37:37
 category: Blog
 toc: true
 tags:
@@ -8,9 +8,12 @@ tags:
  -Git
  -Hexo
  -Travis
+
 ---
 折腾了一个星期才把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,
-travis持续集成会自动生成deploy与github下有300MB空间，整理了以下的笔记，方便日后供作使用。
+travis持续集成会自动生成deploy与github下（有300MB空间），整理了以下的笔记，方便日后供作参考。
+<!-- more -->
+---
 
 ## 安装Git客户端
 1. 下载Git客户端[Git](https://git-scm.com/)
@@ -23,12 +26,11 @@ travis持续集成会自动生成deploy与github下有300MB空间，整理了以
 ---
 ## 配置SSH
 4.设置user name和email：
-
-'$ git config --global user.name "`GitHub用户名`"
-
- $ git config --global user.email "`GitHub注册邮箱`"'
-
- ---
+```Git
+$ git config --global user.name "`GitHub用户名`"
+$ git config --global user.email "`GitHub注册邮箱`"
+```
+---
  5.生成ssh密钥:输入下面命令
 
  '$ ssh-keygen -t rsa -C "`GitHub注册邮箱`"'
@@ -43,11 +45,15 @@ travis持续集成会自动生成deploy与github下有300MB空间，整理了以
  然后paste到`SSH and GPG keys`Key文本框中点击`Add SSH Key`。
 
  ---
-7.7测试SSH链接：
+7.测试SSH链接：
 '$ ssh -T git@github.com'
 
 ---
 ## 创建`本地`仓库
 
 8.'$ mkdir blog'
-9.'$ cd blog # 切换到blog目录'
+9.$ cd blog # 切换到blog目录`
+
+##部署Hexo
+10.安装Hexo
+'$ npm install hexo-cli -g'
