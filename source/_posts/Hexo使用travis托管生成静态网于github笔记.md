@@ -2,7 +2,7 @@
 title: Hexo使用travis托管生成静态网于github笔记
 date: 2016-06-23 00:37:37
 category: Blog
-toc: true
+toc: false
 tags:
  -MarkDown
  tags:
@@ -35,9 +35,9 @@ $ git config --global user.email "`GitHub注册邮箱`"
 ```
 ---
  5.生成ssh密钥:输入下面命令
-
+```Git
  '$ ssh-keygen -t rsa -C "`GitHub注册邮箱`"'
-
+```
  一直enter(回车)，之后会生成两个文件`id_rsa`和`id_rsa.pub`
  default在`用户文件夹.ssh下`。
 
@@ -48,15 +48,18 @@ $ git config --global user.email "`GitHub注册邮箱`"
  然后paste到`SSH and GPG keys`Key文本框中点击`Add SSH Key`。
 
  ---
-7.测试SSH链接：
+7.测试SSH链接:
+```Git
 '$ ssh -T git@github.com'
-
+```
 ---
 ## 创建`本地`仓库
-
+```Git
 8.'$ mkdir blog'
 9.$ cd blog # 切换到blog目录`
-
+```
 ##部署Hexo
 10.安装Hexo
+```Git
 '$ npm install hexo-cli -g'
+```
