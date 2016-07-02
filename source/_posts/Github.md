@@ -25,9 +25,8 @@ travis持续集成会自动生成deploy与github下（有300MB空间），整理
 ## 配置SSH
 4.设置user name和email：
 
-```
+```Git
 $ git config --global user.name "`GitHub用户名`"
-
 $ git config --global user.email "`GitHub注册邮箱`"
 ```
  ---
