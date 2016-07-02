@@ -5,8 +5,11 @@ category: Blog
 toc: true
 tags:
  -MarkDown
+ tags:
  -Git
+ tags:
  -Hexo
+ tags:
  -Travis
 
 ---

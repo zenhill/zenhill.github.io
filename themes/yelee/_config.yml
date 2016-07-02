@@ -10,10 +10,10 @@ menu:
   主页: /
   所有文章: /archives/
   #随笔: /tags/随笔
-  essay: /categories/随笔     
-  write: /categories/写作
-  read:	/categories/阅读
-  study: /categories/学习
+  随笔: /categories/随笔     
+  写作: /categories/写作
+  阅读:	/categories/阅读
+  学习: /categories/学习
   code: /categories/编程
   标签云: /tags/
   关于我: /about/
