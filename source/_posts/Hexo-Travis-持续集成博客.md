@@ -8,7 +8,7 @@ tags:
 ---
 折腾了一个星期才把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,
 travis持续集成会自动生成deploy与github下（有300MB空间），整理了以下的笔记，方便日后供作参考。
-<!-- more -->
+
 ---
 
 ## 安装Git客户端
@@ -26,6 +26,7 @@ travis持续集成会自动生成deploy与github下（有300MB空间），整理
 $ git config --global user.name "`GitHub用户名`"
 $ git config --global user.email "`GitHub注册邮箱`"
 ```
+<!-- more -->
 ---
  5.生成ssh密钥:输入下面命令
 ```Git
