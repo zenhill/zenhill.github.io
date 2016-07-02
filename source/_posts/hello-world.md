@@ -1,5 +1,6 @@
 ---
 title: Hello World
+date: 2015-06-23 00:37:37
 category: Blog
 tags:
   - Hexo
