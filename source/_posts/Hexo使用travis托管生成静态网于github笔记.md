@@ -1,6 +1,6 @@
 ---
 title: Hexo使用travis托管生成静态网于github笔记
-date: 2016-07-02 17:37:37
+date: 2016-07-02 17:59:58
 category: Blog
 toc: false
 tags:
@@ -60,3 +60,4 @@ $ git config --global user.email "`GitHub注册邮箱`"
 ```Git
 '$ npm install hexo-cli -g'
 ```
+
