@@ -46,7 +46,7 @@ $ git config --global user.email "`GitHub注册邮箱`"
 '$ ssh -T git@github.com'
 ```
 ---
-## 创建`本地`仓库
+## 创建*本地*仓库
 ```Git
 8.$ mkdir blog
 9.$ cd blog # 切换到blog目录
@@ -60,15 +60,15 @@ $ npm install hexo-cli -g
 hexo全局安装一次就够。
 </blockquote>
 
-11.初始化Hexo 本地
+11.初始化Hexo *本地*
 ```Git
 $ hexo init
 ```
-12.安装依赖 本地
+12.安装依赖 *本地*
 ```Git
 $ npm install
 ```
-13.添加github仓库信息hexo配置文件_config.yml：本地
+13.添加github仓库信息hexo配置文件_config.yml：*本地*
 ```
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -81,9 +81,47 @@ deploy:
 注意：type、repo、branch的前面有两个空格，后面的:后面有一个空格
 </blockquote>
 
-14.安装git插件 本地
+14.安装git插件 *本地*
 ```
 npm install hexo-deployer-git --save
 ```
 
 **到这里基本上Hexo都已经布置完了，为了能够实现Travis持续集成所以到这里都没有输入hexo deploy这个cmd,因为待会让travis去实现deploy在gh-pages的分支而不是hexo deploy push 到master。**
+
+## 配置Travis部署Hexo
+1.在之前创建的Hexo folder里面手动生成.travis.yml，或者输入命令
+```
+cd hexo folder目录输入以下命令
+$ touch .travis.yml
+```
+2.安装Travis
+
+Travis安装需要Ruby环境并且需要安装rubygems插件
+[rubygems](http://rubyinstaller.org/downloads/)
+
+3.
+```
+# 安装travis
+gem isntall travis
+```
+4.登录travis
+```
+travis login --auto
+```
+<font color=red>输入github的用户名和密码</font>
+
+5.配置.travis.yml,以下是简单布置<font color =blue>实现</font>travis接口。添加变量到[官方网站](https://docs.travis-ci.com/)参考
+```
+language: node_js
+branches:
+  only:
+  - gh-pages
+before_install:
+- npm install -g hexo
+- npm install
+install:
+- hexo generate
+```
+<font color=red>以上设定为了让travis知道repo是出于node_js build的</font>
+<font color=orange>而且只当gh-pages有所变动时实现travis build。</font>
+<font color=pink>所以我们一定要在github master添加分支(branch)命名为*gh-pages*这是非常重要的，要不然travis会一直循环不停的创建</font>
