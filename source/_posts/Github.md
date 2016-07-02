@@ -2,7 +2,6 @@
 title: github笔记
 date: 2015-06-23 00:37:37
 category: Blog
-toc: false
 tags:
  -Github
 
