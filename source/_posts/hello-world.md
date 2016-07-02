@@ -1,7 +1,6 @@
 ---
 title: Hello World
 category: Blog
-toc: false
 tags:
   - Hexo
 ---
