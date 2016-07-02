@@ -48,11 +48,42 @@ $ git config --global user.email "`GitHub注册邮箱`"
 ---
 ## 创建`本地`仓库
 ```Git
-8.'$ mkdir blog'
-9.$ cd blog # 切换到blog目录`
+8.$ mkdir blog
+9.$ cd blog # 切换到blog目录
 ```
-##部署Hexo
-10.安装Hexo
+## 部署Hexo(本地机器)
+10.安装Hexo 本地
 ```Git
-'$ npm install hexo-cli -g'
+$ npm install hexo-cli -g
 ```
+<blockquote>
+hexo全局安装一次就够。
+</blockquote>
+
+11.初始化Hexo 本地
+```Git
+$ hexo init
+```
+12.安装依赖 本地
+```Git
+$ npm install
+```
+13.添加github仓库信息hexo配置文件_config.yml：本地
+```
+# Deployment
+## Docs: https://hexo.io/docs/deployment.html
+deploy:
+  type: git
+  repo: git@github.com:zenhill/zenhill.github.io.git #github仓库地址
+  branch: master # github主支
+```
+<blockquote>
+注意：type、repo、branch的前面有两个空格，后面的:后面有一个空格
+</blockquote>
+
+14.安装git插件 本地
+```
+npm install hexo-deployer-git --save
+```
+
+**到这里基本上Hexo都已经布置完了，为了能够实现Travis持续集成所以到这里都没有输入hexo deploy这个cmd,因为待会让travis去实现deploy在gh-pages的分支而不是hexo deploy push 到master。**
