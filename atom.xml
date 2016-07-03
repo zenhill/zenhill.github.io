@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Bloggers</title>
+  <subtitle>分享技术，交流学习</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2016-07-03T10:02:04.742Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Ken</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hexo_Travis_持续集成博客</title>
+    <link href="http://yoursite.com/2016/07/02/Hexo-Travis-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://yoursite.com/2016/07/02/Hexo-Travis-持续集成博客/</id>
+    <published>2016-07-02T19:09:47.000Z</published>
+    <updated>2016-07-03T10:02:04.742Z</updated>
+    
+    <content type="html">&lt;p&gt;把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,&lt;br&gt;travis持续集成会自动生成deploy于github下（有300MB空间），整理了以下的笔记，方便供作参考。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;安装Git客户端&quot;&gt;&lt;a href=&quot;#安装Git客户端&quot; class=&quot;headerlink&quot; title=&quot;安装Git客户端&quot;&gt;&lt;/a&gt;安装Git客户端&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;下载Git客户端&lt;a href=&quot;https://git-scm.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Git&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;注册Github&quot;&gt;&lt;a href=&quot;#注册Github&quot; class=&quot;headerlink&quot; title=&quot;注册Github&quot;&gt;&lt;/a&gt;注册&lt;a href=&quot;https://github.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Github&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;2.创建仓库&lt;a href=&quot;https://github.com/new&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Create Repositories&lt;/a&gt;&lt;br&gt;3.仓库名称必须是(用户名.github.io)(zenhill.github.io)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;配置SSH&quot;&gt;&lt;a href=&quot;#配置SSH&quot; class=&quot;headerlink&quot; title=&quot;配置SSH&quot;&gt;&lt;/a&gt;配置SSH&lt;/h2&gt;&lt;p&gt;4.设置user name和email：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git config --global user.name &amp;quot;`GitHub用户名`&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ git config --global user.email &amp;quot;`GitHub注册邮箱`&amp;quot;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;hr&gt;
+&lt;p&gt; 5.生成ssh密钥:输入下面命令&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;apos;$ ssh-keygen -t rsa -C &amp;quot;`GitHub注册邮箱`&amp;quot;&amp;apos;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt; 一直enter(回车)，之后会生成两个文件&lt;code&gt;id_rsa&lt;/code&gt;和&lt;code&gt;id_rsa.pub&lt;/code&gt;&lt;br&gt; default在&lt;code&gt;用户文件夹.ssh下&lt;/code&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt; 6.添加公钥到github：&lt;br&gt; Github用户头像的Setting下，选择&lt;code&gt;SSH and GPG keys&lt;/code&gt;·&lt;br&gt; &lt;a href=&quot;https://notepad-plus-plus.org/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Note++&lt;/a&gt;打开刚才生成的&lt;code&gt;id_rsa.pub&lt;/code&gt;copy里面的内容&lt;br&gt; 然后paste到&lt;code&gt;SSH and GPG keys&lt;/code&gt;Key文本框中点击&lt;code&gt;Add SSH Key&lt;/code&gt;。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;7.测试SSH链接:&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;apos;$ ssh -T git@github.com&amp;apos;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;创建本地仓库&quot;&gt;&lt;a href=&quot;#创建本地仓库&quot; class=&quot;headerlink&quot; title=&quot;创建本地仓库&quot;&gt;&lt;/a&gt;创建&lt;em&gt;本地&lt;/em&gt;仓库&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;8.$ mkdir blog&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9.$ cd blog # 切换到blog目录&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;部署Hexo-本地机器&quot;&gt;&lt;a href=&quot;#部署Hexo-本地机器&quot; class=&quot;headerlink&quot; title=&quot;部署Hexo(本地机器)&quot;&gt;&lt;/a&gt;部署Hexo(本地机器)&lt;/h2&gt;&lt;p&gt;10.安装Hexo 本地&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ npm install hexo-cli -g&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;br&gt;hexo全局安装一次就够。&lt;br&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;11.初始化Hexo &lt;em&gt;本地&lt;/em&gt;&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ hexo init&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;12.安装依赖 &lt;em&gt;本地&lt;/em&gt;&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ npm install&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;13.添加github仓库信息hexo配置文件_config.yml：&lt;em&gt;本地&lt;/em&gt;&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;# Deployment&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;## Docs: https://hexo.io/docs/deployment.html&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;deploy:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  type: git&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  repo: git@github.com:zenhill/zenhill.github.io.git #github仓库地址&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  branch: master # github主支&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;blockquote&gt;&lt;br&gt;注意：type、repo、branch的前面有两个空格，后面的:后面有一个空格&lt;br&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;14.安装git插件 &lt;em&gt;本地&lt;/em&gt;&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;npm install hexo-deployer-git --save&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;到这里基本上Hexo都已经布置完了，为了能够实现Travis持续集成所以到这里都没有输入hexo deploy这个cmd,因为待会让travis去实现deploy在gh-pages的分支而不是hexo deploy push 到master。&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;配置Travis部署Hexo&quot;&gt;&lt;a href=&quot;#配置Travis部署Hexo&quot; class=&quot;headerlink&quot; title=&quot;配置Travis部署Hexo&quot;&gt;&lt;/a&gt;配置Travis部署Hexo&lt;/h2&gt;&lt;p&gt;1.在之前创建的Hexo folder里面手动生成.travis.yml，或者输入命令&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;cd hexo folder目录输入以下命令&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ touch .travis.yml&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;2.安装Travis&lt;/p&gt;
+&lt;p&gt;Travis安装需要Ruby环境并且需要安装rubygems插件&lt;br&gt;&lt;a href=&quot;http://rubyinstaller.org/downloads/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;rubygems&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;3.&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;# 安装travis （command window）&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;gem isntall travis&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;4.登录travis （command window）&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;travis login --auto&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;font color=&quot;red&quot;&gt;输入github的用户名和密码&lt;/font&gt;
+
+&lt;p&gt;5.配置.travis.yml,以下是简单布置&lt;font color=&quot;blue&quot;&gt;实现&lt;/font&gt;travis接口。添加变量到&lt;a href=&quot;https://docs.travis-ci.com/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;官方网站&lt;/a&gt;参考&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;language: node_js&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;branches:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  only:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  - gh-pages&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;before_install:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- npm install -g hexo&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- npm install&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;install:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- hexo generate&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;font color=&quot;green&quot;&gt;以上设定为了让travis知道repo是出于node_js build的&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;orange&quot;&gt;而且只当gh-pages有所变动时实现travis build。&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;purple&quot;&gt;所以我们一定要在github master添加分支(branch)命名为&lt;em&gt;gh-pages&lt;/em&gt;这是非常重要的，要不然travis会一直循环不停的创建&lt;/font&gt;
+
+&lt;p&gt;6.配置Github token好让travis&lt;font color=&quot;red&quot;&gt;至少&lt;/font&gt;能有access repo push的权利，创建&lt;a href=&quot;https://github.com/settings/tokens&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Personal access Token&lt;/a&gt;&lt;/p&gt;
+&lt;font color=&quot;red&quot;&gt;创建了之后记得把token码copy下来，因为这码只在你创建之后显示一次。&lt;/font&gt;
+
+&lt;hr&gt;
+&lt;h2 id=&quot;重写Hexo-Config-配合使用以上创建的token。&quot;&gt;&lt;a href=&quot;#重写Hexo-Config-配合使用以上创建的token。&quot; class=&quot;headerlink&quot; title=&quot;重写Hexo Config 配合使用以上创建的token。&quot;&gt;&lt;/a&gt;重写Hexo Config 配合使用以上创建的token。&lt;/h2&gt;&lt;p&gt;1.接下来继续&lt;font color=&quot;red&quot;&gt;步骤4&lt;/font&gt;的登录travis(command window)&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;travis login --auto&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;2.为了安全原因,使用travis加密法加密Github token,当一切顺利完成，会在.travis.yml的文件里添加信息。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ travis encrypt &amp;apos;GH_TOKEN=&amp;lt;之前生成的Github token&amp;gt;&amp;apos; --add&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;以下是.travis.yml生成的信息。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;env:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  global:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;      secure: X7+8XA.....#注意这里所生成的加密tokens每个人都不一样。&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;p&gt;3.最后是最容易也是最难的一部分。现在我们要让travis动态的(每一次)commit之后&lt;br&gt;重写Hexo config 来使用网页token而不是ssh 的。以下为&lt;font color=&quot;red&quot;&gt;.travis.yml&lt;/font&gt;里的代码。&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;before_script:&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- git config --global user.name &amp;apos;用户名&amp;apos;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- git config --global user.email &amp;apos;用户邮件&amp;apos;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;- sed -i&amp;apos;&amp;apos; &amp;quot;s~git@github.com:用户名/仓库名.github.io.git~https://$&amp;#123;GH_TOKEN&amp;#125;:x-oauth-basic@github.com/用户名/仓库名.github.io.git~&amp;quot; _config.yml&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;完整版&lt;a href=&quot;https://github.com/zenhill/zenhill.github.io/blob/gh-pages/.travis.yml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;.travis.yml&lt;/a&gt;参考&lt;/li&gt;
+&lt;li&gt;完整版&lt;a href=&quot;https://github.com/zenhill/zenhill.github.io/blob/gh-pages/_config.yml&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;_config.yml&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;完整版&lt;a href=&quot;https://github.com/zenhill/zenhill.github.io/blob/gh-pages/package.json&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;package.json&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.jianshu.com/p/f4cc5866946b&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;参考文献1-SeayXu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://sazzer.github.io/blog/2015/05/04/Deploying-Hexo-to-Github-Pages-with-Travis/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;参考文献2-Graham Cox&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,&lt;br&gt;travis持续集成会自动生成deploy于github下（有300MB空间），整理了以下的笔记，方便供作参考。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;安装Git客户端&quot;&gt;&lt;a href=&quot;#安装Git客户端&quot; class=&quot;headerlink&quot; title=&quot;安装Git客户端&quot;&gt;&lt;/a&gt;安装Git客户端&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;下载Git客户端&lt;a href=&quot;https://git-scm.com/&quot;&gt;Git&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;注册Github&quot;&gt;&lt;a href=&quot;#注册Github&quot; class=&quot;headerlink&quot; title=&quot;注册Github&quot;&gt;&lt;/a&gt;注册&lt;a href=&quot;https://github.com/&quot;&gt;Github&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;2.创建仓库&lt;a href=&quot;https://github.com/new&quot;&gt;Create Repositories&lt;/a&gt;&lt;br&gt;3.仓库名称必须是(用户名.github.io)(zenhill.github.io)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&quot;配置SSH&quot;&gt;&lt;a href=&quot;#配置SSH&quot; class=&quot;headerlink&quot; title=&quot;配置SSH&quot;&gt;&lt;/a&gt;配置SSH&lt;/h2&gt;&lt;p&gt;4.设置user name和email：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ git config --global user.name &amp;quot;`GitHub用户名`&amp;quot;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ git config --global user.email &amp;quot;`GitHub注册邮箱`&amp;quot;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+    
+      <category term="Travis" scheme="http://yoursite.com/tags/Travis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2016/07/02/hello-world/"/>
+    <id>http://yoursite.com/2016/07/02/hello-world/</id>
+    <published>2016-07-02T19:09:47.000Z</published>
+    <updated>2016-07-03T10:02:04.742Z</updated>
+    
+    <content type="html">&lt;h2 id=&quot;permalink-common-hexo-commands&quot;&gt;&lt;a href=&quot;#permalink-common-hexo-commands&quot; class=&quot;headerlink&quot; title=&quot;permalink: common-hexo-commands&quot;&gt;&lt;/a&gt;permalink: common-hexo-commands&lt;/h2&gt;&lt;style&gt;
+    .article-entry h2 {
+        border-bottom: none;
+    }
+&lt;/style&gt;
+
+&lt;p&gt;　　Hexo 约有二十个命令，但普通用户经常使用的大概只有下列几个:&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;h2 id=&quot;hexo-s&quot;&gt;&lt;a href=&quot;#hexo-s&quot; class=&quot;headerlink&quot; title=&quot;hexo s&quot;&gt;&lt;/a&gt;hexo s&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;hexo s&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;启动本地服务器，用于预览主题。默认地址： &lt;a href=&quot;http://localhost:4000/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://localhost:4000/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;hexo s&lt;/code&gt; 是 &lt;code&gt;hexo server&lt;/code&gt; 的缩写，命令效果一致；&lt;/li&gt;
+&lt;li&gt;预览的同时可以修改文章内容或主题代码，保存后刷新页面即可；&lt;/li&gt;
+&lt;li&gt;对 Hexo 根目录 &lt;code&gt;_config.yml&lt;/code&gt; 的修改，需要重启本地服务器后才能预览效果。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;hexo-n&quot;&gt;&lt;a href=&quot;#hexo-n&quot; class=&quot;headerlink&quot; title=&quot;hexo n&quot;&gt;&lt;/a&gt;hexo n&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;hexo n &amp;quot;学习笔记  六&amp;quot;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;新建一篇标题为 &lt;code&gt;学习笔记  六&lt;/code&gt; 的文章，因为标题里有空格，所以加上了引号。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;文章标题可以在对应 md 文件里改，新建时标题可以写的简单些；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hexo n&lt;/code&gt; 是 &lt;code&gt;hexo new&lt;/code&gt; 的缩写，命令效果一致。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;hexo-d&quot;&gt;&lt;a href=&quot;#hexo-d&quot; class=&quot;headerlink&quot; title=&quot;hexo d&quot;&gt;&lt;/a&gt;hexo d&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;hexo d&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;自动生成网站静态文件，并部署到设定的仓库。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;hexo d&lt;/code&gt; 是 &lt;code&gt;hexo deploy&lt;/code&gt; 的缩写，命令效果一致。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;hexo-clean&quot;&gt;&lt;a href=&quot;#hexo-clean&quot; class=&quot;headerlink&quot; title=&quot;hexo clean&quot;&gt;&lt;/a&gt;hexo clean&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;hexo clean&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;清除缓存文件 &lt;code&gt;db.json&lt;/code&gt; 和已生成的静态文件 &lt;code&gt;public&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;网站显示异常时可以执行这条命令试试。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;hexo-g&quot;&gt;&lt;a href=&quot;#hexo-g&quot; class=&quot;headerlink&quot; title=&quot;hexo g&quot;&gt;&lt;/a&gt;hexo g&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;hexo g&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;生成网站静态文件到默认设置的 &lt;code&gt;public&lt;/code&gt; 文件夹。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;便于查看网站生成的静态文件或者手动部署网站；&lt;/li&gt;
+&lt;li&gt;如果使用自动部署，不需要先执行该命令；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hexo g&lt;/code&gt; 是 &lt;code&gt;hexo generate&lt;/code&gt; 的缩写，命令效果一致。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;hexo-n-page&quot;&gt;&lt;a href=&quot;#hexo-n-page&quot; class=&quot;headerlink&quot; title=&quot;hexo n page&quot;&gt;&lt;/a&gt;hexo n page&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;hexo n page aboutme&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;新建一个标题为 &lt;code&gt;aboutme&lt;/code&gt; 的页面，默认链接地址为 &lt;code&gt;主页地址/aboutme/&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;标题可以为中文，但一般习惯用英文；&lt;/li&gt;
+&lt;li&gt;页面标题和文章一样可以随意修改；&lt;/li&gt;
+&lt;li&gt;页面不会出现在首页文章列表和归档中，也不支持设置分类和标签。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;常用组合&quot;&gt;&lt;a href=&quot;#常用组合&quot; class=&quot;headerlink&quot; title=&quot;常用组合&quot;&gt;&lt;/a&gt;常用组合&lt;/h2&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;hexo clean &amp;amp;&amp;amp; hexo s&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;hexo clean &amp;amp;&amp;amp; hexo d&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;可以用输入法等软件为这些命令设置快捷键，方便调用。&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;permalink-common-hexo-commands&quot;&gt;&lt;a href=&quot;#permalink-common-hexo-commands&quot; class=&quot;headerlink&quot; title=&quot;permalink: common-hexo-commands&quot;&gt;&lt;/a&gt;permalink: common-hexo-commands&lt;/h2&gt;&lt;style&gt;
+    .article-entry h2 {
+        border-bottom: none;
+    }
+&lt;/style&gt;
+
+&lt;p&gt;　　Hexo 约有二十个命令，但普通用户经常使用的大概只有下列几个:&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+    
+  </entry>
+  
+</feed>

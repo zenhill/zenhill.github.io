@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+    
+    <entry>
+      <title><![CDATA[Hexo_Travis_持续集成博客]]></title>
+      <url>http://yoursite.com/2016/07/02/Hexo-Travis-%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E5%8D%9A%E5%AE%A2/</url>
+      <content type="html"><![CDATA[<p>把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,<br>travis持续集成会自动生成deploy于github下（有300MB空间），整理了以下的笔记，方便供作参考。</p>
+<hr>
+<h2 id="安装Git客户端"><a href="#安装Git客户端" class="headerlink" title="安装Git客户端"></a>安装Git客户端</h2><ol>
+<li>下载Git客户端<a href="https://git-scm.com/" target="_blank" rel="external">Git</a></li>
+</ol>
+<hr>
+<h2 id="注册Github"><a href="#注册Github" class="headerlink" title="注册Github"></a>注册<a href="https://github.com/" target="_blank" rel="external">Github</a></h2><p>2.创建仓库<a href="https://github.com/new" target="_blank" rel="external">Create Repositories</a><br>3.仓库名称必须是(用户名.github.io)(zenhill.github.io)</p>
+<hr>
+<h2 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h2><p>4.设置user name和email：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git config --global user.name &quot;`GitHub用户名`&quot;</div><div class="line">$ git config --global user.email &quot;`GitHub注册邮箱`&quot;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<hr>
+<p> 5.生成ssh密钥:输入下面命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&apos;$ ssh-keygen -t rsa -C &quot;`GitHub注册邮箱`&quot;&apos;</div></pre></td></tr></table></figure></p>
+<p> 一直enter(回车)，之后会生成两个文件<code>id_rsa</code>和<code>id_rsa.pub</code><br> default在<code>用户文件夹.ssh下</code>。</p>
+<hr>
+<p> 6.添加公钥到github：<br> Github用户头像的Setting下，选择<code>SSH and GPG keys</code>·<br> <a href="https://notepad-plus-plus.org/" target="_blank" rel="external">Note++</a>打开刚才生成的<code>id_rsa.pub</code>copy里面的内容<br> 然后paste到<code>SSH and GPG keys</code>Key文本框中点击<code>Add SSH Key</code>。</p>
+<hr>
+<p>7.测试SSH链接:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&apos;$ ssh -T git@github.com&apos;</div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="创建本地仓库"><a href="#创建本地仓库" class="headerlink" title="创建本地仓库"></a>创建<em>本地</em>仓库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">8.$ mkdir blog</div><div class="line">9.$ cd blog # 切换到blog目录</div></pre></td></tr></table></figure>
+<h2 id="部署Hexo-本地机器"><a href="#部署Hexo-本地机器" class="headerlink" title="部署Hexo(本地机器)"></a>部署Hexo(本地机器)</h2><p>10.安装Hexo 本地<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div></pre></td></tr></table></figure></p>
+<blockquote><br>hexo全局安装一次就够。<br></blockquote>
+
+<p>11.初始化Hexo <em>本地</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo init</div></pre></td></tr></table></figure></p>
+<p>12.安装依赖 <em>本地</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install</div></pre></td></tr></table></figure></p>
+<p>13.添加github仓库信息hexo配置文件_config.yml：<em>本地</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:zenhill/zenhill.github.io.git #github仓库地址</div><div class="line">  branch: master # github主支</div></pre></td></tr></table></figure></p>
+<blockquote><br>注意：type、repo、branch的前面有两个空格，后面的:后面有一个空格<br></blockquote>
+
+<p>14.安装git插件 <em>本地</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
+<p><strong>到这里基本上Hexo都已经布置完了，为了能够实现Travis持续集成所以到这里都没有输入hexo deploy这个cmd,因为待会让travis去实现deploy在gh-pages的分支而不是hexo deploy push 到master。</strong></p>
+<hr>
+<h2 id="配置Travis部署Hexo"><a href="#配置Travis部署Hexo" class="headerlink" title="配置Travis部署Hexo"></a>配置Travis部署Hexo</h2><p>1.在之前创建的Hexo folder里面手动生成.travis.yml，或者输入命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd hexo folder目录输入以下命令</div><div class="line">$ touch .travis.yml</div></pre></td></tr></table></figure></p>
+<p>2.安装Travis</p>
+<p>Travis安装需要Ruby环境并且需要安装rubygems插件<br><a href="http://rubyinstaller.org/downloads/" target="_blank" rel="external">rubygems</a></p>
+<p>3.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 安装travis （command window）</div><div class="line">gem isntall travis</div></pre></td></tr></table></figure></p>
+<p>4.登录travis （command window）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">travis login --auto</div></pre></td></tr></table></figure></p>
+<font color="red">输入github的用户名和密码</font>
+
+<p>5.配置.travis.yml,以下是简单布置<font color="blue">实现</font>travis接口。添加变量到<a href="https://docs.travis-ci.com/" target="_blank" rel="external">官方网站</a>参考<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">language: node_js</div><div class="line">branches:</div><div class="line">  only:</div><div class="line">  - gh-pages</div><div class="line">before_install:</div><div class="line">- npm install -g hexo</div><div class="line">- npm install</div><div class="line">install:</div><div class="line">- hexo generate</div></pre></td></tr></table></figure></p>
+<font color="green">以上设定为了让travis知道repo是出于node_js build的</font><br><font color="orange">而且只当gh-pages有所变动时实现travis build。</font><br><font color="purple">所以我们一定要在github master添加分支(branch)命名为<em>gh-pages</em>这是非常重要的，要不然travis会一直循环不停的创建</font>
+
+<p>6.配置Github token好让travis<font color="red">至少</font>能有access repo push的权利，创建<a href="https://github.com/settings/tokens" target="_blank" rel="external">Personal access Token</a></p>
+<font color="red">创建了之后记得把token码copy下来，因为这码只在你创建之后显示一次。</font>
+
+<hr>
+<h2 id="重写Hexo-Config-配合使用以上创建的token。"><a href="#重写Hexo-Config-配合使用以上创建的token。" class="headerlink" title="重写Hexo Config 配合使用以上创建的token。"></a>重写Hexo Config 配合使用以上创建的token。</h2><p>1.接下来继续<font color="red">步骤4</font>的登录travis(command window)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">travis login --auto</div></pre></td></tr></table></figure></p>
+<p>2.为了安全原因,使用travis加密法加密Github token,当一切顺利完成，会在.travis.yml的文件里添加信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ travis encrypt &apos;GH_TOKEN=&lt;之前生成的Github token&gt;&apos; --add</div></pre></td></tr></table></figure></p>
+<p>以下是.travis.yml生成的信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">env:</div><div class="line">  global:</div><div class="line">      secure: X7+8XA.....#注意这里所生成的加密tokens每个人都不一样。</div></pre></td></tr></table></figure></p>
+<p>3.最后是最容易也是最难的一部分。现在我们要让travis动态的(每一次)commit之后<br>重写Hexo config 来使用网页token而不是ssh 的。以下为<font color="red">.travis.yml</font>里的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">before_script:</div><div class="line">- git config --global user.name &apos;用户名&apos;</div><div class="line">- git config --global user.email &apos;用户邮件&apos;</div><div class="line">- sed -i&apos;&apos; &quot;s~git@github.com:用户名/仓库名.github.io.git~https://$&#123;GH_TOKEN&#125;:x-oauth-basic@github.com/用户名/仓库名.github.io.git~&quot; _config.yml</div></pre></td></tr></table></figure></p>
+<ul>
+<li>完整版<a href="https://github.com/zenhill/zenhill.github.io/blob/gh-pages/.travis.yml" target="_blank" rel="external">.travis.yml</a>参考</li>
+<li>完整版<a href="https://github.com/zenhill/zenhill.github.io/blob/gh-pages/_config.yml" target="_blank" rel="external">_config.yml</a></li>
+<li>完整版<a href="https://github.com/zenhill/zenhill.github.io/blob/gh-pages/package.json" target="_blank" rel="external">package.json</a></li>
+<li><a href="http://www.jianshu.com/p/f4cc5866946b" target="_blank" rel="external">参考文献1-SeayXu</a></li>
+<li><a href="http://sazzer.github.io/blog/2015/05/04/Deploying-Hexo-to-Github-Pages-with-Travis/" target="_blank" rel="external">参考文献2-Graham Cox</a></li>
+</ul>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Hello World]]></title>
+      <url>http://yoursite.com/2016/07/02/hello-world/</url>
+      <content type="html"><![CDATA[<h2 id="permalink-common-hexo-commands"><a href="#permalink-common-hexo-commands" class="headerlink" title="permalink: common-hexo-commands"></a>permalink: common-hexo-commands</h2><style>
+    .article-entry h2 {
+        border-bottom: none;
+    }
+</style>
+
+<p>　　Hexo 约有二十个命令，但普通用户经常使用的大概只有下列几个:</p>
+<a id="more"></a>
+<h2 id="hexo-s"><a href="#hexo-s" class="headerlink" title="hexo s"></a>hexo s</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo s</div></pre></td></tr></table></figure>
+<p>启动本地服务器，用于预览主题。默认地址： <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a></p>
+<ul>
+<li><code>hexo s</code> 是 <code>hexo server</code> 的缩写，命令效果一致；</li>
+<li>预览的同时可以修改文章内容或主题代码，保存后刷新页面即可；</li>
+<li>对 Hexo 根目录 <code>_config.yml</code> 的修改，需要重启本地服务器后才能预览效果。</li>
+</ul>
+<h2 id="hexo-n"><a href="#hexo-n" class="headerlink" title="hexo n"></a>hexo n</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo n &quot;学习笔记  六&quot;</div></pre></td></tr></table></figure>
+<p>新建一篇标题为 <code>学习笔记  六</code> 的文章，因为标题里有空格，所以加上了引号。</p>
+<ul>
+<li>文章标题可以在对应 md 文件里改，新建时标题可以写的简单些；</li>
+<li><code>hexo n</code> 是 <code>hexo new</code> 的缩写，命令效果一致。</li>
+</ul>
+<h2 id="hexo-d"><a href="#hexo-d" class="headerlink" title="hexo d"></a>hexo d</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo d</div></pre></td></tr></table></figure>
+<p>自动生成网站静态文件，并部署到设定的仓库。</p>
+<ul>
+<li><code>hexo d</code> 是 <code>hexo deploy</code> 的缩写，命令效果一致。</li>
+</ul>
+<h2 id="hexo-clean"><a href="#hexo-clean" class="headerlink" title="hexo clean"></a>hexo clean</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo clean</div></pre></td></tr></table></figure>
+<p>清除缓存文件 <code>db.json</code> 和已生成的静态文件 <code>public</code>。</p>
+<ul>
+<li>网站显示异常时可以执行这条命令试试。</li>
+</ul>
+<h2 id="hexo-g"><a href="#hexo-g" class="headerlink" title="hexo g"></a>hexo g</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo g</div></pre></td></tr></table></figure>
+<p>生成网站静态文件到默认设置的 <code>public</code> 文件夹。</p>
+<ul>
+<li>便于查看网站生成的静态文件或者手动部署网站；</li>
+<li>如果使用自动部署，不需要先执行该命令；</li>
+<li><code>hexo g</code> 是 <code>hexo generate</code> 的缩写，命令效果一致。</li>
+</ul>
+<h2 id="hexo-n-page"><a href="#hexo-n-page" class="headerlink" title="hexo n page"></a>hexo n page</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo n page aboutme</div></pre></td></tr></table></figure>
+<p>新建一个标题为 <code>aboutme</code> 的页面，默认链接地址为 <code>主页地址/aboutme/</code></p>
+<ul>
+<li>标题可以为中文，但一般习惯用英文；</li>
+<li>页面标题和文章一样可以随意修改；</li>
+<li>页面不会出现在首页文章列表和归档中，也不支持设置分类和标签。</li>
+</ul>
+<h2 id="常用组合"><a href="#常用组合" class="headerlink" title="常用组合"></a>常用组合</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo clean &amp;&amp; hexo s</div><div class="line">hexo clean &amp;&amp; hexo d</div></pre></td></tr></table></figure>
+<p>可以用输入法等软件为这些命令设置快捷键，方便调用。</p>
+]]></content>
+    </entry>
+    
+  
+  
+</search>

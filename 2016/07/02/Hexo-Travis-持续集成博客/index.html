@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html >
+<head>
+
+    <!--[if lt IE 9]>
+        <style>body {display: none; background: none !important} </style>
+        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
+    <![endif]-->
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="format-detection" content="telephone=no" />
+<meta name="author" content="Ken" />
+
+
+
+<meta name="description" content="把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,travis持续集成会自动生成deploy于github下（有300MB空间），整理了以下的笔记，方便供作参考。
+
+安装Git客户端
+下载Git客户端Git
+
+
+注册Github2.创建仓库Create Repositories3.仓库名称必须是(用户名.github.io)(zenhill.github.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo_Travis_持续集成博客">
+<meta property="og:url" content="http://yoursite.com/2016/07/02/Hexo-Travis-持续集成博客/index.html">
+<meta property="og:site_name" content="Bloggers">
+<meta property="og:description" content="把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,travis持续集成会自动生成deploy于github下（有300MB空间），整理了以下的笔记，方便供作参考。
+
+安装Git客户端
+下载Git客户端Git
+
+
+注册Github2.创建仓库Create Repositories3.仓库名称必须是(用户名.github.io)(zenhill.github.">
+<meta property="og:updated_time" content="2016-07-03T10:02:04.742Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo_Travis_持续集成博客">
+<meta name="twitter:description" content="把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,travis持续集成会自动生成deploy于github下（有300MB空间），整理了以下的笔记，方便供作参考。
+
+安装Git客户端
+下载Git客户端Git
+
+
+注册Github2.创建仓库Create Repositories3.仓库名称必须是(用户名.github.io)(zenhill.github.">
+
+<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
+
+
+    <link rel="alternative" href="/atom.xml" title="Bloggers" type="application/atom+xml">
+
+
+
+    <link rel="shortcut icon" href="/favicon.png">
+
+
+
+    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+
+
+
+    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+
+
+
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="/css/style.css">
+
+
+
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+
+
+<title>Hexo_Travis_持续集成博客 | Bloggers</title>
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+<script>
+    var yiliaConfig = {
+        fancybox: true,
+        animate: true,
+        isHome: false,
+        isPost: true,
+        isArchive: false,
+        isTag: false,
+        isCategory: false,
+        open_in_new: false,
+        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
+        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
+        search: true
+    }
+</script>
+
+
+    <script> yiliaConfig.jquery_ui = [false]; </script>
+
+
+
+    <script> yiliaConfig.rootUrl = "\/";</script>
+
+
+
+
+
+
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            <img src="/img/avatar.png" class="animated zoomIn">
+        </a>
+        <hgroup>
+          <h1 class="header-author"><a href="/">Ken</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">分享技术，交流学习</p>
+        
+
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" results="0" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="false" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
+        
+
+
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">主页</a></li>
+                        
+                            <li><a href="/archives/">所有文章</a></li>
+                        
+                            <li><a href="/categories/随笔">随笔</a></li>
+                        
+                            <li><a href="/categories/写作">写作</a></li>
+                        
+                            <li><a href="/categories/阅读">阅读</a></li>
+                        
+                            <li><a href="/categories/学习">学习</a></li>
+                        
+                            <li><a href="/categories/编程">code</a></li>
+                        
+                            <li><a href="/tags/">标签云</a></li>
+                        
+                            <li><a href="/about/">关于我</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:kenjilee81460@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/zenhill" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/users/059bbe096638" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="/" title="SegmentFault"></a>
+                            
+                                <a class="fa 博客园" target="_blank" href="/cnblogs" title="博客园"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://my.csdn.net/kenjilee101" title="CSDN"></a>
+                            
+                                <a class="fa Facebook" target="_blank" href="https://www.facebook.com/lee.y.khien" title="Facebook"></a>
+                            
+                                <a class="fa Google" target="_blank" href="#" title="Google"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/Wechat" title="微信"></a>
+                            
+                                <a class="fa PayPal" target="_blank" href="#" title="PayPal"></a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Travis/">Travis</a></li></ul>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://hexo.io">Hexo</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://pages.github.com/">GitHub</a>
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="http://moxfive.xyz/">MOxFIVE</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">专注于Build游戏</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页">Ken</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                <img src="/img/avatar.png" class="animated zoomIn">
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="回到主页">Ken</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">分享技术，交流学习</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">主页</a></li>
+                
+                    <li><a href="/archives/">所有文章</a></li>
+                
+                    <li><a href="/categories/随笔">随笔</a></li>
+                
+                    <li><a href="/categories/写作">写作</a></li>
+                
+                    <li><a href="/categories/阅读">阅读</a></li>
+                
+                    <li><a href="/categories/学习">学习</a></li>
+                
+                    <li><a href="/categories/编程">code</a></li>
+                
+                    <li><a href="/tags/">标签云</a></li>
+                
+                    <li><a href="/about/">关于我</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fa Email" target="_blank" href="mailto:kenjilee81460@gmail.com" title="Email"></a>
+                            
+                                <a class="fa GitHub" target="_blank" href="https://github.com/zenhill" title="GitHub"></a>
+                            
+                                <a class="fa RSS" target="_blank" href="/atom.xml" title="RSS"></a>
+                            
+                                <a class="fa 简书" target="_blank" href="http://www.jianshu.com/users/059bbe096638" title="简书"></a>
+                            
+                                <a class="fa SegmentFault" target="_blank" href="/" title="SegmentFault"></a>
+                            
+                                <a class="fa 博客园" target="_blank" href="/cnblogs" title="博客园"></a>
+                            
+                                <a class="fa CSDN" target="_blank" href="http://my.csdn.net/kenjilee101" title="CSDN"></a>
+                            
+                                <a class="fa Facebook" target="_blank" href="https://www.facebook.com/lee.y.khien" title="Facebook"></a>
+                            
+                                <a class="fa Google" target="_blank" href="#" title="Google"></a>
+                            
+                                <a class="fa 微信" target="_blank" href="/Wechat" title="微信"></a>
+                            
+                                <a class="fa PayPal" target="_blank" href="#" title="PayPal"></a>
+                            
+                        </ul>
+            </nav>
+        </header>                
+    </div>
+    <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
+</nav>
+      <div class="body-wrap"><article id="post-Hexo-Travis-持续集成博客" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/02/Hexo-Travis-持续集成博客/" class="article-date">
+      <time datetime="2016-07-02T19:09:47.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hexo_Travis_持续集成博客
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Hexo/">Hexo</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Travis/">Travis</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,<br>travis持续集成会自动生成deploy于github下（有300MB空间），整理了以下的笔记，方便供作参考。</p>
+<hr>
+<h2 id="安装Git客户端"><a href="#安装Git客户端" class="headerlink" title="安装Git客户端"></a>安装Git客户端</h2><ol>
+<li>下载Git客户端<a href="https://git-scm.com/" target="_blank" rel="external">Git</a></li>
+</ol>
+<hr>
+<h2 id="注册Github"><a href="#注册Github" class="headerlink" title="注册Github"></a>注册<a href="https://github.com/" target="_blank" rel="external">Github</a></h2><p>2.创建仓库<a href="https://github.com/new" target="_blank" rel="external">Create Repositories</a><br>3.仓库名称必须是(用户名.github.io)(zenhill.github.io)</p>
+<hr>
+<h2 id="配置SSH"><a href="#配置SSH" class="headerlink" title="配置SSH"></a>配置SSH</h2><p>4.设置user name和email：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git config --global user.name &quot;`GitHub用户名`&quot;</div><div class="line">$ git config --global user.email &quot;`GitHub注册邮箱`&quot;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<hr>
+<p> 5.生成ssh密钥:输入下面命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&apos;$ ssh-keygen -t rsa -C &quot;`GitHub注册邮箱`&quot;&apos;</div></pre></td></tr></table></figure></p>
+<p> 一直enter(回车)，之后会生成两个文件<code>id_rsa</code>和<code>id_rsa.pub</code><br> default在<code>用户文件夹.ssh下</code>。</p>
+<hr>
+<p> 6.添加公钥到github：<br> Github用户头像的Setting下，选择<code>SSH and GPG keys</code>·<br> <a href="https://notepad-plus-plus.org/" target="_blank" rel="external">Note++</a>打开刚才生成的<code>id_rsa.pub</code>copy里面的内容<br> 然后paste到<code>SSH and GPG keys</code>Key文本框中点击<code>Add SSH Key</code>。</p>
+<hr>
+<p>7.测试SSH链接:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&apos;$ ssh -T git@github.com&apos;</div></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="创建本地仓库"><a href="#创建本地仓库" class="headerlink" title="创建本地仓库"></a>创建<em>本地</em>仓库</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">8.$ mkdir blog</div><div class="line">9.$ cd blog # 切换到blog目录</div></pre></td></tr></table></figure>
+<h2 id="部署Hexo-本地机器"><a href="#部署Hexo-本地机器" class="headerlink" title="部署Hexo(本地机器)"></a>部署Hexo(本地机器)</h2><p>10.安装Hexo 本地<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-cli -g</div></pre></td></tr></table></figure></p>
+<blockquote><br>hexo全局安装一次就够。<br></blockquote>
+
+<p>11.初始化Hexo <em>本地</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo init</div></pre></td></tr></table></figure></p>
+<p>12.安装依赖 <em>本地</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install</div></pre></td></tr></table></figure></p>
+<p>13.添加github仓库信息hexo配置文件_config.yml：<em>本地</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># Deployment</div><div class="line">## Docs: https://hexo.io/docs/deployment.html</div><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:zenhill/zenhill.github.io.git #github仓库地址</div><div class="line">  branch: master # github主支</div></pre></td></tr></table></figure></p>
+<blockquote><br>注意：type、repo、branch的前面有两个空格，后面的:后面有一个空格<br></blockquote>
+
+<p>14.安装git插件 <em>本地</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure></p>
+<p><strong>到这里基本上Hexo都已经布置完了，为了能够实现Travis持续集成所以到这里都没有输入hexo deploy这个cmd,因为待会让travis去实现deploy在gh-pages的分支而不是hexo deploy push 到master。</strong></p>
+<hr>
+<h2 id="配置Travis部署Hexo"><a href="#配置Travis部署Hexo" class="headerlink" title="配置Travis部署Hexo"></a>配置Travis部署Hexo</h2><p>1.在之前创建的Hexo folder里面手动生成.travis.yml，或者输入命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd hexo folder目录输入以下命令</div><div class="line">$ touch .travis.yml</div></pre></td></tr></table></figure></p>
+<p>2.安装Travis</p>
+<p>Travis安装需要Ruby环境并且需要安装rubygems插件<br><a href="http://rubyinstaller.org/downloads/" target="_blank" rel="external">rubygems</a></p>
+<p>3.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 安装travis （command window）</div><div class="line">gem isntall travis</div></pre></td></tr></table></figure></p>
+<p>4.登录travis （command window）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">travis login --auto</div></pre></td></tr></table></figure></p>
+<font color="red">输入github的用户名和密码</font>
+
+<p>5.配置.travis.yml,以下是简单布置<font color="blue">实现</font>travis接口。添加变量到<a href="https://docs.travis-ci.com/" target="_blank" rel="external">官方网站</a>参考<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">language: node_js</div><div class="line">branches:</div><div class="line">  only:</div><div class="line">  - gh-pages</div><div class="line">before_install:</div><div class="line">- npm install -g hexo</div><div class="line">- npm install</div><div class="line">install:</div><div class="line">- hexo generate</div></pre></td></tr></table></figure></p>
+<font color="green">以上设定为了让travis知道repo是出于node_js build的</font><br><font color="orange">而且只当gh-pages有所变动时实现travis build。</font><br><font color="purple">所以我们一定要在github master添加分支(branch)命名为<em>gh-pages</em>这是非常重要的，要不然travis会一直循环不停的创建</font>
+
+<p>6.配置Github token好让travis<font color="red">至少</font>能有access repo push的权利，创建<a href="https://github.com/settings/tokens" target="_blank" rel="external">Personal access Token</a></p>
+<font color="red">创建了之后记得把token码copy下来，因为这码只在你创建之后显示一次。</font>
+
+<hr>
+<h2 id="重写Hexo-Config-配合使用以上创建的token。"><a href="#重写Hexo-Config-配合使用以上创建的token。" class="headerlink" title="重写Hexo Config 配合使用以上创建的token。"></a>重写Hexo Config 配合使用以上创建的token。</h2><p>1.接下来继续<font color="red">步骤4</font>的登录travis(command window)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">travis login --auto</div></pre></td></tr></table></figure></p>
+<p>2.为了安全原因,使用travis加密法加密Github token,当一切顺利完成，会在.travis.yml的文件里添加信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ travis encrypt &apos;GH_TOKEN=&lt;之前生成的Github token&gt;&apos; --add</div></pre></td></tr></table></figure></p>
+<p>以下是.travis.yml生成的信息。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">env:</div><div class="line">  global:</div><div class="line">      secure: X7+8XA.....#注意这里所生成的加密tokens每个人都不一样。</div></pre></td></tr></table></figure></p>
+<p>3.最后是最容易也是最难的一部分。现在我们要让travis动态的(每一次)commit之后<br>重写Hexo config 来使用网页token而不是ssh 的。以下为<font color="red">.travis.yml</font>里的代码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">before_script:</div><div class="line">- git config --global user.name &apos;用户名&apos;</div><div class="line">- git config --global user.email &apos;用户邮件&apos;</div><div class="line">- sed -i&apos;&apos; &quot;s~git@github.com:用户名/仓库名.github.io.git~https://$&#123;GH_TOKEN&#125;:x-oauth-basic@github.com/用户名/仓库名.github.io.git~&quot; _config.yml</div></pre></td></tr></table></figure></p>
+<ul>
+<li>完整版<a href="https://github.com/zenhill/zenhill.github.io/blob/gh-pages/.travis.yml" target="_blank" rel="external">.travis.yml</a>参考</li>
+<li>完整版<a href="https://github.com/zenhill/zenhill.github.io/blob/gh-pages/_config.yml" target="_blank" rel="external">_config.yml</a></li>
+<li>完整版<a href="https://github.com/zenhill/zenhill.github.io/blob/gh-pages/package.json" target="_blank" rel="external">package.json</a></li>
+<li><a href="http://www.jianshu.com/p/f4cc5866946b" target="_blank" rel="external">参考文献1-SeayXu</a></li>
+<li><a href="http://sazzer.github.io/blog/2015/05/04/Deploying-Hexo-to-Github-Pages-with-Travis/" target="_blank" rel="external">参考文献2-Graham Cox</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2016/07/02/Hexo-Travis-持续集成博客/">Hexo_Travis_持续集成博客</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Ken</a></p>
+        <p><span>发布时间:</span>2016-07-02, 19:09:47</p>
+        <p><span>最后更新:</span>2016-07-03, 10:02:04</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2016/07/02/Hexo-Travis-持续集成博客/" title="Hexo_Travis_持续集成博客">http://yoursite.com/2016/07/02/Hexo-Travis-持续集成博客/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://yoursite.com/2016/07/02/Hexo-Travis-持续集成博客/　　作者: Ken" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2016/07/02/hello-world/">
+                    Hello World
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#安装Git客户端"><span class="toc-number">1.</span> <span class="toc-text">安装Git客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册Github"><span class="toc-number">2.</span> <span class="toc-text">注册Github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置SSH"><span class="toc-number">3.</span> <span class="toc-text">配置SSH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建本地仓库"><span class="toc-number">4.</span> <span class="toc-text">创建本地仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#部署Hexo-本地机器"><span class="toc-number">5.</span> <span class="toc-text">部署Hexo(本地机器)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置Travis部署Hexo"><span class="toc-number">6.</span> <span class="toc-text">配置Travis部署Hexo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#重写Hexo-Config-配合使用以上创建的token。"><span class="toc-number">7.</span> <span class="toc-text">重写Hexo Config 配合使用以上创建的token。</span></a></li></ol>
+</div>
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+</style>
+
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script>
+    yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+</script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Hexo_Travis_持续集成博客　| Bloggers　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+      <div class="duoshuo" id="comments">
+    <div id="comment-box" ></div>
+    <div class="ds-thread" id="ds-thread" data-thread-key="2016/07/02/Hexo-Travis-持续集成博客/" data-title="Hexo_Travis_持续集成博客" data-url="http://yoursite.com/2016/07/02/Hexo-Travis-持续集成博客/"></div>
+    <script>
+        var duoshuoQuery = {short_name:"null"};
+        var loadComment = function(){
+            var d = document, s = d.createElement('script');
+            s.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            s.async = true; s.charset = 'UTF-8';
+            (d.head || d.body).appendChild(s);
+        }
+
+        
+            // Add comment count
+            $(function(){ 
+                var jsonUrl = "http://api.duoshuo.com/threads/counts.jsonp?short_name=null&threads=2016/07/02/Hexo-Travis-持续集成博客/&callback=?";
+                $.getJSON(jsonUrl, function(result){
+                    $.each(result.response, function(i, field){
+                        var value = field.comments;
+                        if (value > 0) {
+                            $(".count-comment").text(value);
+                            return;
+                        }
+                    })
+                })
+            })
+        
+    </script>
+    
+    <aside class="comment-bar">
+        <a href="javascript:void(0);">
+            <i class="fa fa-commenting-o animated infinite pulse"></i>
+            <i class="fa fa-spinner fa-pulse"></i>
+            <span class="count-comment"></span>
+        </a>
+    </aside>
+    <script>
+        var $commentBar = $("#comments aside.comment-bar");
+        var load$hide = function(){
+            $commentBar.find("a > i").toggle();
+            loadComment();
+            $commentBar.fadeOut(800);
+        }
+        $commentBar.click(function(){
+            load$hide();
+        })
+        $commentBar.children("a").hover(function(){
+            load$hide();
+        })
+        if (window.location.hash === "#comments") {
+            load$hide();
+        }
+    </script>
+
+</div>
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2016/07/02/hello-world/" title="下一篇: Hello World">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/Hexo-Travis-持续集成博客/">Hexo_Travis_持续集成博客</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/02/hello-world/">Hello World</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                <i class="fa fa-copyright"></i> 
+                2016 Ken
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >本站到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+    </div>
+    
+<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var iPad = window.navigator.userAgent.indexOf('iPad');
+            if (iPad > -1 || $(".left-col").css("display") === "none") {
+                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
+                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
+                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
+            }
+            else {
+                var backgroundnum = 5;
+                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
+            }
+        })
+    </script>
+
+
+
+
+<div class="scroll" id="scroll">
+    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+  </div>
+</body>
+</html>
