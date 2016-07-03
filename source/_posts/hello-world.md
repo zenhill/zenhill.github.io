@@ -4,57 +4,86 @@ date: 2016-07-02 19:09:47
 category: Hexo
 tags:
 - Hexo
-- Travis
-
-# Hexo_Travis_持续集成博客
 ---
-折腾了一个星期才把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,
-travis持续集成会自动生成deploy与github下（有300MB空间），整理了以下的笔记，方便日后供作参考。
+
+permalink: common-hexo-commands
+---
+
+<style>
+    .article-entry h2 {
+        border-bottom: none;
+    }
+</style>
+
+　　Hexo 约有二十个命令，但普通用户经常使用的大概只有下列几个:
+
 <!-- more -->
----
 
-## 安装Git客户端
-1. 下载Git客户端[Git](https://git-scm.com/)
+## hexo s
 
----
-## 注册[Github](https://github.com/)
-2.创建仓库[Create Repositories](https://github.com/new)
-3.仓库名称必须是(用户名.github.io)(zenhill.github.io)
+```
+hexo s
+```
 
----
-## 配置SSH
-4.设置user name和email：
-```Git
-$ git config --global user.name "`GitHub用户名`"
-$ git config --global user.email "`GitHub注册邮箱`"
-```
----
- 5.生成ssh密钥:输入下面命令
-```Git
- '$ ssh-keygen -t rsa -C "`GitHub注册邮箱`"'
-```
- 一直enter(回车)，之后会生成两个文件`id_rsa`和`id_rsa.pub`
- default在`用户文件夹.ssh下`。
+启动本地服务器，用于预览主题。默认地址： <http://localhost:4000/>
+- `hexo s` 是 `hexo server` 的缩写，命令效果一致；
+- 预览的同时可以修改文章内容或主题代码，保存后刷新页面即可；
+- 对 Hexo 根目录 `_config.yml` 的修改，需要重启本地服务器后才能预览效果。
 
----
- 6.添加公钥到github：
- Github用户头像的Setting下，选择`SSH and GPG keys`·
- [Note++](https://notepad-plus-plus.org/)打开刚才生成的`id_rsa.pub`copy里面的内容
- 然后paste到`SSH and GPG keys`Key文本框中点击`Add SSH Key`。
+## hexo n
 
- ---
-7.测试SSH链接:
-```Git
-'$ ssh -T git@github.com'
 ```
----
-## 创建`本地`仓库
-```Git
-8.'$ mkdir blog'
-9.$ cd blog # 切换到blog目录`
+hexo n "学习笔记  六"
 ```
-##部署Hexo
-10.安装Hexo
-```Git
-'$ npm install hexo-cli -g'
+
+新建一篇标题为 `学习笔记  六` 的文章，因为标题里有空格，所以加上了引号。
+- 文章标题可以在对应 md 文件里改，新建时标题可以写的简单些；
+- `hexo n` 是 `hexo new` 的缩写，命令效果一致。
+
+## hexo d
+
 ```
+hexo d
+```
+
+自动生成网站静态文件，并部署到设定的仓库。
+- `hexo d` 是 `hexo deploy` 的缩写，命令效果一致。
+
+## hexo clean
+
+```
+hexo clean
+```
+
+清除缓存文件 `db.json` 和已生成的静态文件 `public`。
+- 网站显示异常时可以执行这条命令试试。
+
+## hexo g
+
+```
+hexo g
+```
+
+生成网站静态文件到默认设置的 `public` 文件夹。
+- 便于查看网站生成的静态文件或者手动部署网站；
+- 如果使用自动部署，不需要先执行该命令；
+- `hexo g` 是 `hexo generate` 的缩写，命令效果一致。
+
+## hexo n page
+
+```
+hexo n page aboutme
+```
+
+新建一个标题为 `aboutme` 的页面，默认链接地址为 `主页地址/aboutme/`
+
+- 标题可以为中文，但一般习惯用英文；
+- 页面标题和文章一样可以随意修改；
+- 页面不会出现在首页文章列表和归档中，也不支持设置分类和标签。
+
+## 常用组合
+```
+hexo clean && hexo s
+hexo clean && hexo d
+```
+可以用输入法等软件为这些命令设置快捷键，方便调用。
