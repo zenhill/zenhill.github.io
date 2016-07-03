@@ -6,8 +6,8 @@ tags:
 - Hexo
 - Travis
 ---
-折腾了一个星期才把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,
-travis持续集成会自动生成deploy与github下（有300MB空间），整理了以下的笔记，方便日后供作参考。
+把Hexo框架置放于Github的托管下，难处在于每次推送commit新文章上github,
+travis持续集成会自动生成deploy于github下（有300MB空间），整理了以下的笔记，方便供作参考。
 
 ---
 
@@ -89,6 +89,7 @@ npm install hexo-deployer-git --save
 
 **到这里基本上Hexo都已经布置完了，为了能够实现Travis持续集成所以到这里都没有输入hexo deploy这个cmd,因为待会让travis去实现deploy在gh-pages的分支而不是hexo deploy push 到master。**
 
+---
 ## 配置Travis部署Hexo
 1.在之前创建的Hexo folder里面手动生成.travis.yml，或者输入命令
 ```
@@ -102,10 +103,10 @@ Travis安装需要Ruby环境并且需要安装rubygems插件
 
 3.
 ```
-# 安装travis
+# 安装travis （command window）
 gem isntall travis
 ```
-4.登录travis
+4.登录travis （command window）
 ```
 travis login --auto
 ```
@@ -123,6 +124,41 @@ before_install:
 install:
 - hexo generate
 ```
-<font color=red>以上设定为了让travis知道repo是出于node_js build的</font>
+<font color=green>以上设定为了让travis知道repo是出于node_js build的</font>
 <font color=orange>而且只当gh-pages有所变动时实现travis build。</font>
-<font color=pink>所以我们一定要在github master添加分支(branch)命名为*gh-pages*这是非常重要的，要不然travis会一直循环不停的创建</font>
+<font color=purple>所以我们一定要在github master添加分支(branch)命名为*gh-pages*这是非常重要的，要不然travis会一直循环不停的创建</font>
+
+6.配置Github token好让travis<font color=red>至少</font>能有access repo push的权利，创建[Personal access Token](https://github.com/settings/tokens)
+<font color=red>创建了之后记得把token码copy下来，因为这码只在你创建之后显示一次。</font>
+
+---
+## 重写Hexo Config 配合使用以上创建的token。
+
+1.接下来继续<font color=red>步骤4</font>的登录travis(command window)
+```
+travis login --auto
+```
+2.为了安全原因,使用travis加密法加密Github token,当一切顺利完成，会在.travis.yml的文件里添加信息。
+```
+$ travis encrypt 'GH_TOKEN=<之前生成的Github token>' --add
+```
+以下是.travis.yml生成的信息。
+```
+env:
+  global:
+      secure: X7+8XA.....#注意这里所生成的加密tokens每个人都不一样。
+```
+
+3.最后是最容易也是最难的一部分。现在我们要让travis动态的(每一次)commit之后
+重写Hexo config 来使用网页token而不是ssh 的。以下为<font color=red>.travis.yml</font>里的代码。
+```
+before_script:
+- git config --global user.name '用户名'
+- git config --global user.email '用户邮件'
+- sed -i'' "s~git@github.com:用户名/仓库名.github.io.git~https://${GH_TOKEN}:x-oauth-basic@github.com/用户名/仓库名.github.io.git~" _config.yml
+```
+- 完整版[.travis.yml](https://github.com/zenhill/zenhill.github.io/blob/gh-pages/.travis.yml)参考
+- 完整版[_config.yml](https://github.com/zenhill/zenhill.github.io/blob/gh-pages/_config.yml)
+- 完整版[package.json](https://github.com/zenhill/zenhill.github.io/blob/gh-pages/package.json)
+- [参考文献1-SeayXu](http://www.jianshu.com/p/f4cc5866946b)
+- [参考文献2-Graham Cox](http://sazzer.github.io/blog/2015/05/04/Deploying-Hexo-to-Github-Pages-with-Travis/)
