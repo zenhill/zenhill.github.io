@@ -52,6 +52,7 @@ $ git config --global user.email "`GitHub注册邮箱`"
 8.$ mkdir blog
 9.$ cd blog # 切换到blog目录
 ```
+
 ## 部署Hexo(本地机器)
 10.安装Hexo 本地
 ```Git
