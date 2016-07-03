@@ -27,6 +27,7 @@ $ git config --global user.name "`GitHub用户名`"
 $ git config --global user.email "`GitHub注册邮箱`"
 ```
 <!-- more -->
+
 ---
  5.生成ssh密钥:输入下面命令
 ```Git
